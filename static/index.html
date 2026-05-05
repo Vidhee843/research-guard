@@ -1,0 +1,147 @@
+<!--UI by Vidhee Patel & Tyler Williams-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Guard</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+</head>
+  <body onload="init()">
+      <div class="container">
+          <header class="header">
+              <div class="title">Research Guard</div>
+              <div class="button-group">
+                  <button onclick="createNewResearchSession()" class="btn new-btn">New</button>
+                  <button onclick="deleteResearchSession()"  class="btn delete-btn">Delete</button>
+                  <button onclick="share()" style="background-color: #1F6FEB;" class="btn share-btn">Share</button>
+              </div>
+          </header>
+
+          <div class="content-wrapper">
+              <main class="main-content">
+                  <div class="search-section">
+                      <input type="text" class="search-box" id="search-box" placeholder="Search publications..."></input>
+                      <div class="search-info">Via title, abstract, url, metadata, or category.</div>
+                      <button onclick="searchPublications()" class="search-btn">Search</button>
+                  </div>
+
+                  <div class="content-area">
+                      <div class="results-container">
+                        <div class="results-box">
+                          <div class="form-container" id="memo-form-container" style="display: none;">
+                            <h3 class="form-title">Research Memo</h3>
+                            <form id="memo-form">
+                              <label for="memo-title" class="form-label">Title</label>
+                              <input type="text" id="memo-title" name="title" class="form-input" placeholder="Enter title..." required />
+                          
+                              <label for="memo-content" class="form-label">Content</label>
+                              <textarea id="memo-content" name="content" class="form-textarea" placeholder="Enter content..." required></textarea>
+                          
+                              <div class="form-buttons">
+                                <button type="button" class="form-btn update-btn" onclick="back()">← Back</button>
+                                <button type="submit" class="form-btn create-btn">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+                            <div id="publications" style="display: block;"> 
+                              <table id="documents-table" class="display">
+                                <thead>
+                                  <tr>
+                                    <th>Date Created</th>
+                                    <th>Submission Date</th>
+                                    <th>Title</th>
+                                    <th>Authors</th>
+                                    <th>Category</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table>
+                            </div>
+                            
+                            <div id="memos" style="display: none;">
+                              <div class="summary-controls">
+                                <button class="toggle-btn" style="" onclick="back()">← Back</button>
+                                <button class="toggle-btn" style="background-color: #1F6FEB;" onclick="viewMemo()">View →</button>
+                                <button class="toggle-btn" style="background-color: #f85149;;" onclick="deleteMemo()">Delete</button>
+                              </div>
+                              <div>
+                               
+                              <table id="memos-table" class="display: block;">
+                                <thead>
+                                  <tr>
+                                    <th>Date Created</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Publication</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table>
+                                
+                              </div>
+                            </div>
+                            <div id="summary" style="display: none;">
+                              <div class="summary-controls">
+                                <button class="toggle-btn" onclick="back()">← Back</button>
+                                <button class="toggle-btn" onclick="toggleView('abstract')">Abstract Only</button>
+                                <button class="toggle-btn" onclick="toggleView('both')">Show Both</button>
+                                <button class="toggle-btn" onclick="toggleView('summary')">Summary Only</button>
+                              </div>
+                              <div class="summary-container">
+                                <div class="summary-box abstract-box" id="abstract-box">
+                                  <h3 class="summary-title">Abstract</h3>
+                                  <div class="summary-content" id="abstract-content">
+                                    <!-- Abstract content will be inserted here dynamically -->
+                                  </div>
+                                </div>
+                                <div class="summary-box full-summary-box" id="summary-box">
+                                  <h3 class="summary-title">Next Steps</h3>
+                                  <div class="summary-content" id="full-summary-content" style="padding-left: 10px;">
+                                    <!-- Full summary content will be inserted here dynamically -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          
+                          </div>
+                          <div class="actions-panel">
+                              <button id="summarize-button" onclick="summarizePublication()" class="action-btn summarize-btn">Summarize</button>
+                              <button id="summarize-button" onclick="viewMemos()" class="action-btn summarize-btn">Memo</button>
+                              <button onclick="viewPublication()" style="background-color: #1F6FEB;" class="action-btn summarize-btn">View →</button>
+                              <button  onclick="citate()" style="background-color: #1F6FEB;" class="action-btn summarize-btn">Citation →</button>
+                              <button onclick="redirectToPublications()" style="background-color: #1F6FEB;" class="action-btn publications-btn">Publications →</button>
+                          </div>
+                      </div>
+                  </div>
+              </main>
+              <aside class="sidebar">
+                  <h2 class="sidebar-title">Saved Research Sessions</h2>
+                  <div class="sessions-table">
+                    <table id="research-sessions">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="research-sessions-body">
+                           
+                        </tbody>
+                    </table>
+              </aside>
+          </div>
+      </div>
+  </body>
+  <footer>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+  </footer>
+</html>

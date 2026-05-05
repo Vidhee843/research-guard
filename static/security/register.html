@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="security/css/styles.css">
+    <link rel="icon" href="../assets/img/.../logo.png">
+    <title>VitaPath</title>
+  </head>
+  <body onload="addRegisterFormEventListener();">
+    <div class="container">
+      <h1><a href="/">Research</a> Guard Registration</h1>
+      <p style="color: lightgray;">Already a user? <a href="/login">Login to your account.</a></p>
+      <form id="form">
+        <label for="username">Username (must be 3-32 characters long and can only include _ or -)</label>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <label for="password">Password (requires capital letter, number, and special character)</label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit">Register</button>
+        <p id="response-msg"></p>
+      </form>
+    </div>
+   <script src="security/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!--UI by Vidhee Patel & Tyler Williams-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Guard</title>
+    <link rel="stylesheet" href="css/publications.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+</head>
+  <body onload="init()">
+      <div class="publications-container">
+          <h1 class="page-title">Publications</h1>
+          
+          <div class="main-content">
+              <div class="content-header">
+                  <h2 class="section-title">Available Documents</h2>
+              </div>
+
+              <table id="documents-table" class="display">
+                <thead>
+                  <tr>
+                    <th>Date Created</th>
+                    <th>Submission Date</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+          </div>
+          
+          <div class="action-buttons">
+              <button onclick="location.assign('/')" style="background-color: #1F6FEB;" class="btn">← Back</button>
+              <button onclick="redirectToTrain()"  style="background-color: #1F6FEB;" class="btn train-models">Settings →</button>
+              <button onclick="redirectToNew(true)" class="btn new-publication">Create</button>
+              <button onclick="redirectToNew(false)" style="background-color: #1F6FEB;" class="btn new-publication">Update</button>
+              <button onclick="deletePublication()" style="background-color: #f85149;" class="btn new-publication">Delete</button>
+              
+          </div>
+      </div>
+      
+  </body>
+  <footer>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="js/publications.js"></script>
+    <script src="js/main.js"></script>
+  </footer>
+</html>

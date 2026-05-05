@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="security/css/styles.css">
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <title>Login</title>
+  </head>
+  <body onload="addLoginFormEventListener()">
+    <div class="container">
+      <h1><a href="/">Research</a> Guard Login</h1>
+      <p style="color: lightgray;">New user? <a href="/register">Register your account.</a></p>
+      <form id="form">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+        <p id="response-msg"></p>
+      </form>
+    </div>
+    <script src="security/js/main.js"></script>
+  </body>
+</html>

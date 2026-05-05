@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Guard</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body onload="init()">
+    <div class="admin-container">
+      
+        
+        <h1 class="admin-title">Admin Panel</h1>
+
+        <div class="admin-header">
+            <button onclick="redirectBack()" class="back-btn">← Back</button>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+            
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <section class="dashboard-card dataset-management">
+                    <h2 class="card-title">Dataset Management</h2>     
+                    <div class="upload-box">
+                        <label for="fileInput" class="box-label">Upload Publication Dataset</label>
+                        <input type="file" id="upload-dataset" class="file-input" />
+                    </div>
+                    <button onclick="classifyDataset()" class="retrain-btn">Classify Publications</button><br><br>
+                    <div class="model-types-dropdown">
+                        <label for="model-types" class="dropdown-label">Classification Model:</label>
+                        <select id="classificaton-model" class="dropdown-select">
+                            <option value="naive-bayes-model">Naive Bayes</option>
+                            <option value="random-forest-model">Random Forest</option>
+                            <option value="linear-svm-model">Linear SVM</option>
+                            <option value="logistic-regression-model">Logistic Regression</option>
+                        </select>
+                        <div class="override-checkbox">
+                            <input type="checkbox" id="override-checkbox">
+                            <label for="override-checkbox">Override existing categories?</label>
+                        </div>
+                    </div>
+                </section>
+                <section class="dashboard-card performance-metrics">
+                    <h2 class="card-title">Analytics</h2>
+                    <div class="loading-container" id="loadingContainer" style="display: block;">
+                        <div class="loading-bar">
+                            <div class="loading-progress" id="loadingProgress"></div>
+                        </div>
+                        <div class="loading-text" id="loadingText">Waiting...</div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-row">
+                            <span class="metric-label">Model</span>
+                            <span id="metric-model" class="metric-value">---</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Accuracy</span>
+                            <span id="metric-accuracy" class="metric-value">---</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Precision/Recall</span>
+                            <span id="metric-precision-recall" class="metric-value">--- / ---</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">F1 Score</span>
+                            <span id="metric-f1" class="metric-value">---</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Confusion Matrix</span>
+                            <span class="metric-value">
+                            <a id="confusion-matrix" href="" target="_blank" style="color: white;">---</a>
+                            </span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="right-column">
+                <section class="dashboard-card training-logs">
+                    <h2 class="card-title">Research Session Contributors</h2>
+                    <p id="owner">Owner: ---</p>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contributors-table-body">
+                               
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <section class="dashboard-card training-visualization">
+                    <h2 class="card-title">Available Models</h2>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Model Name</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Naive Bayes</td>
+                                    <td><span id="nb-active" class="status-inactive">Inactive</span></td>
+                                    <td>
+                                        <button onclick="train('naive-bayes-model')"  style="background-color: #00C896" class="table-btn">Train</button>
+                                        <button onclick="downloadDataset('naive-bayes-model')" style="background-color: #1F6FEB;" class="table-btn">Download</button>
+                                        <button onclick="deleteModel('naive-bayes-model')" style="background-color: #f85149;" class="table-btn">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Random Forest</td>
+                                    <td><span id="rf-active" class="status-inactive">Inactive</span></td>
+                                    <td>
+                                        <button onclick="train('random-forest-model')" style="background-color: #00C896" class="table-btn">Train</button>
+                                        <button onclick="downloadDataset('random-forest-model')" style="background-color: #1F6FEB;" class="table-btn">Download</button>
+                                        <button onclick="deleteModel('random-forest-model')" style="background-color: #f85149;" class="table-btn">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Linear SVM</td>
+                                    <td><span id="lsvm-active" class="status-inactive">Inactive</span></td>
+                                    <td>
+                                        <button onclick="train('linear-svm-model')" style="background-color: #00C896" class="table-btn">Train</button>
+                                        <button onclick="downloadDataset('linear-svm-model')" style="background-color: #1F6FEB;" class="table-btn">Download</button>
+                                        <button onclick="deleteModel('linear-svm-model')" style="background-color: #f85149;" class="table-btn">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Logistic Regression</td>
+                                    <td><span id="lr-active" class="status-inactive">Inactive</span></td>
+                                    <td>
+                                        <button onclick="train('logistic-regression-model')" style="background-color: #00C896" class="table-btn">Train</button>
+                                        <button onclick="downloadDataset('logistic-regression-model')" style="background-color: #1F6FEB;" class="table-btn">Download</button>
+                                        <button onclick="deleteModel('logistic-regression-model')" style="background-color: #f85149;" class="table-btn">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script src="js/admin.js"></script>
+    </footer>
+</body>
+</html>
